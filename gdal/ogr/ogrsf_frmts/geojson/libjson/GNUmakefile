@@ -21,8 +21,13 @@ CPPFLAGS := $(CPPFLAGS)
 
 default:	$(O_OBJ:.o=.$(OBJ_EXT))
 
+OS := $(shell uname)
+ifeq ($(OS), Darwin)
+CPPFLAGS := $(CPPFLAGS)
+else
 # -D_XOPEN_SOURCE=500 to enable strdup() definition in C11 mode
 CPPFLAGS := -D_XOPEN_SOURCE=500 $(CPPFLAGS)
+endif
 
 ../../o/%.$(OBJ_EXT):	%.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
